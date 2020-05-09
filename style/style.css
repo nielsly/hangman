@@ -28,7 +28,10 @@ html {
     font-family: sans-serif;
 }
 
-#answer {
-    margin: 2vh 0;
+#answer, #image {
     font-family: monospace;
+}
+
+#resetbutton, #image {
+    margin: 2vh 0;
 }
