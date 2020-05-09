@@ -116,7 +116,7 @@ class ClassHangMan {
 
     updateAnswer(letter, locs) {
         for (let i = 0; i < locs.length; i++) {
-            this.guessed[i] = letter;
+            this.guessed[locs[i]] = letter;
         }
 
         if (this.guessed.join('') === this.word) {
