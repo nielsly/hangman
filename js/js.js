@@ -67,6 +67,7 @@ class ClassHangMan {
         this.toggleButtons(false);
         this.image.remove();
         this.answer.remove();
+        this.word = undefined;
 
         this.setup();
     }
@@ -82,6 +83,7 @@ class ClassHangMan {
     async wordsPicker() {
         this.wordsArray = await fetch('words/' + this.size + '.json').then(response => response.json());
         //this.wordsArray = ['a'.repeat(26),'b'.repeat(26),'a'.repeat(13) + 'b'.repeat(13) ,'abcdefghijklmnopqrstuvwxyz'];
+        //this.wordsArray = ["drugs", "kunst", "lucht", "lunch", "truck", "tyfus"];
     }
 
     toggleButtons(disabled) {
@@ -113,6 +115,7 @@ class ClassHangMan {
     }
 
     pickWord(letter) {
+        console.log('picked word')
         this.word = this.wordsArray[Math.random() * this.wordsArray.length | 0];
         this.wordArray = this.word.split('');
 
@@ -226,22 +229,22 @@ class ClassHangMan {
                     this.lose();
                 }
             } else {
-                console.log('wow this is pretty much impossible');
+                console.log('picked letter');
     
                 //TODO: Implement giving letters better
                 let regExp = new RegExp('[a-z]*' + letter + '[a-z]*' + letter + '[a-z]*')
                 newArray = [];
                 for (let i = 0; i < this.wordsArray.length; i++) {
                     if (!regExp.test(this.wordsArray[i])) {
-                        newArray.push(wordsArray[i]);
+                        newArray.push(this.wordsArray[i]);
                     }
                 }
     
                 let newerArray = [];
                 for (let i = 0; i < this.size; i++) {
                     newerArray.push([]);
-                    regExp = new RegExp('[a-z]{' + i + '}' + letter + '[a-z]*');
-                    for (let j = 0; j < newArray.size; j++) {
+                    regExp = new RegExp('^[a-z]{' + i + '}' + letter + '[a-z]{' + (this.size - i - 1) + '}$');
+                    for (let j = 0; j < newArray.length; j++) {
                         if (regExp.test(newArray[j])) {
                             newerArray[i].push(newArray[j]);
                         }
@@ -266,7 +269,6 @@ class ClassHangMan {
                 }
             }
         } else {
-            this.wordArray;
             let locs = [];
             let num = 0;
 
@@ -278,7 +280,6 @@ class ClassHangMan {
             }
             
             if (num == 0) {
-                this.wordsArray = newArray;
                 this.phase++;
                 this.updateImage();
                 if(this.phase == this.textImage.length - 1) {
