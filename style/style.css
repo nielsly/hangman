@@ -27,3 +27,7 @@ html {
     min-width: 100%;
     font-family: sans-serif;
 }
+
+#resetbutton {
+    margin: 2vh 0;
+}

@@ -1,7 +1,7 @@
 let hg;
 
 String.prototype.replaceAt = function(index, replacement) {
-    return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
 
 class ClassHangMan {
@@ -38,18 +38,19 @@ class ClassHangMan {
 
         this.container.appendChild(this.input)
 
-        this.setup();
+        this.resetButton = document.createElement('button');
+        this.resetButton.innerHTML = 'Reset';
+        this.resetButton.id = 'resetbutton';
 
-        const resetButton = document.createElement('button');
-        resetButton.innerHTML = 'Reset';
-
-        resetButton.onclick = function() {
-            reset();
+        this.resetButton.onclick = function() {
+            hangman.reset();
         }
 
-        this.container.appendChild(resetButton);
+        this.container.appendChild(this.resetButton);
 
-        document.getElementsByTagName('footer')[0].prepend(this.container);
+        this.setup();        
+
+        document.getElementById('container').insertBefore(this.container, document.getElementsByTagName('footer')[0]);
     }
 
     async setup() {
@@ -63,18 +64,19 @@ class ClassHangMan {
             this.image = document.createElement('img');
         } else {
             this.textImage = await fetch('i/hangman.json').then(response => response.json());
-            //this.textImage = ["\n\n\n\n\n _ _ _","\n|\n|\n|\n|\n|_ _ _","_____\n|\n|\n|\n|\n|_ _ _","_____\n|/   \n|\n|\n|\n|_ _ _","_____\n|/  |\n|\n|\n|\n|_ _ _","_____\n|/  |\n|   O\n|\n|\n|_ _ _","_____\n|/  |\n|   O\n|   |\n|\n|_ _ _","_____\n|/  |\n|   O\n|  /|\n|\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n|\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n|  /\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n|  / \\\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n| _/ \\\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n| _/ \\_\n|_ _ _","_____\n|/  |\n|   O\n| _/|\\\n| _/ \\_\n|_ _ _","_____\n|/  |\n|   O\n| _/|\\_\n| _/ \\_\n|_ _ _"];
-            this.image = document.createElement('pre');
+            //this.textImage = ["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;_&nbsp;_&nbsp;_&nbsp;","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;/&nbsp;\\&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;_/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;_/|\\_<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;"];
+            this.image = document.createElement('div');
+            this.image.style.fontFamily = 'monospace';
         }
 
         this.updateImage();
         
-        this.container.appendChild(this.image);
+        this.container.insertBefore(this.image, this.resetButton);
 
         this.answer = document.createElement('p');
         this.guessed = '_'.repeat(this.size);
         this.answer.innerHTML = this.guessed;
-        this.container.appendChild(this.answer);
+        this.container.insertBefore(this.answer, this.resetButton);
     }
 
     reset() {
