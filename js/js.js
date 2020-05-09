@@ -75,9 +75,13 @@ class ClassHangMan {
 
         this.answer = document.createElement('u');
         this.answer.id = 'answer';
+
         this.guessed = new Array(this.size);
         this.guessed.fill('&nbsp;');
+
         this.answer.innerHTML = this.guessed.join('');
+        this.answer.appendChild(document.createElement('br'));
+
         this.container.insertBefore(this.answer, this.resetButton);
     }
 
@@ -119,16 +123,19 @@ class ClassHangMan {
             this.win();
         } else {
             this.answer.innerHTML = this.guessed.join('');
+            this.answer.appendChild(document.createElement('br'));
         }
     }
 
-    lose() {
+    lose() {    
         this.answer.innerHTML = this.wordsArray[Math.random() * this.wordsArray.length | 0];
+        this.answer.appendChild(document.createElement('br'));
         this.toggleButtons(true);
     }
 
     win() {
         this.answer.innerHTML = this.word;
+        this.answer.appendChild(document.createElement('br'));
         this.toggleButtons(true);
     }
 
