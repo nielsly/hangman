@@ -34,14 +34,15 @@ class ClassHangMan {
         document.body.appendChild(this.container);
     }
 
-    setup() {
+    async setup() {
+        this.size = 5;
         this.wordsPicker();
         this.phase = 0;
 
         if (this.imageMode) {
             this.image = document.createElement('img');
         } else {
-            this.textImage = ["\n\n\n\n\n _ _ _","\n|\n|\n|\n|\n|_ _ _","_____\n|\n|\n|\n|\n|_ _ _","_____\n|/   \n|\n|\n|\n|_ _ _","_____\n|/  |\n|\n|\n|\n|_ _ _","_____\n|/  |\n|   O\n|\n|\n|_ _ _","_____\n|/  |\n|   O\n|  /|\n|\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n|\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n|  /\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n|  / \\\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n| _/ \\\n|_ _ _","_____\n|/  |\n|   O\n|  /|\\\n| _/ \\_\n|_ _ _","_____\n|/  |\n|   O\n| _/|\\\n| _/ \\_\n|_ _ _","_____\n|/  |\n|   O\n| _/|\\_\n| _/ \\_\n|_ _ _"];
+            this.textImage = await fetch('i/hangman.json').then(response => response.json());
             this.image = document.createElement('pre');
         }
 
@@ -51,10 +52,9 @@ class ClassHangMan {
 
         //this.size = Math.random*14 | 0;
         //this.size = 26;
-        this.size = 5;
 
         this.answer = document.createElement('p');
-        this.answer.innerHTML = "_".repeat(this.size);
+        this.answer.innerHTML = '_'.repeat(this.size);
         this.container.appendChild(this.answer);
     }
 
@@ -68,7 +68,7 @@ class ClassHangMan {
 
     updateImage() {
         if (this.imageMode) {
-            this.image.src = "i/hangman_" + this.phase + ".svg";
+            this.image.src = 'i/hangman_' + this.phase + '.svg';
         } else {
             this.image.innerHTML = this.textImage[this.phase];
         }
@@ -76,7 +76,7 @@ class ClassHangMan {
     
     async wordsPicker() {
     //wordsPicker() {
-        this.wordsArray = (await fetch('words/' + this.size + '.json').then(x => x.text())).split('\n');
+        this.wordsArray = await fetch('words/' + this.size + '.json').then(response => response.json());
         //this.wordsArray = ['a'.repeat(26),'b'.repeat(26),'a'.repeat(13) + 'b'.repeat(13) ,'abcdefghijklmnopqrstuvwxyz'];
     }
 
@@ -100,7 +100,7 @@ class ClassHangMan {
             }
         } else {
             //TODO: Implement giving letters;
-            console.log("wow this is pretty much impossible");
+            console.log('wow this is pretty much impossible');
         }
     }
 }
