@@ -8,9 +8,10 @@ class ClassHangMan {
     constructor() {
         this.container = document.createElement('div');
 
-        const alphabet = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
+        const alphabet = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
 
         this.regExps = {};
+
         for (let i = 0; i < alphabet.length; i++) {
             this.regExps[alphabet[i]] = new RegExp('[a-z]*' + alphabet[i] + '[a-z]*');
         }
@@ -31,7 +32,7 @@ class ClassHangMan {
 
             this.input.appendChild(button);
 
-            if (i == 9 || i == 18) {
+            if (i === 9 || i === 18) {
                 this.input.appendChild(document.createElement('br'));
             }
         }
@@ -40,7 +41,6 @@ class ClassHangMan {
 
         this.resetButton = document.createElement('button');
         this.resetButton.innerHTML = 'Reset';
-        this.resetButton.id = 'resetbutton';
 
         this.resetButton.onclick = function() {
             hangman.reset();
@@ -64,7 +64,7 @@ class ClassHangMan {
             this.image = document.createElement('img');
         } else {
             this.textImage = await fetch('i/hangman.json').then(response => response.json());
-            //this.textImage = ["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;_&nbsp;_&nbsp;_&nbsp;","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;/&nbsp;\\&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;_/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;","_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;_/|\\_<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;"];
+            //this.textImage = ['&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;_&nbsp;_&nbsp;_&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;/&nbsp;\\&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;_/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;_/|\\_<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;'];
             this.image = document.createElement('div');
             this.image.style.fontFamily = 'monospace';
         }
@@ -73,9 +73,11 @@ class ClassHangMan {
         
         this.container.insertBefore(this.image, this.resetButton);
 
-        this.answer = document.createElement('p');
-        this.guessed = '_'.repeat(this.size);
-        this.answer.innerHTML = this.guessed;
+        this.answer = document.createElement('u');
+        this.answer.id = 'answer';
+        this.guessed = new Array(this.size);
+        this.guessed.fill('&nbsp;');
+        this.answer.innerHTML = this.guessed.join('');
         this.container.insertBefore(this.answer, this.resetButton);
     }
 
@@ -99,7 +101,7 @@ class ClassHangMan {
     async wordsPicker() {
         this.wordsArray = await fetch('words/' + this.size + '.json').then(response => response.json());
         //this.wordsArray = ['a'.repeat(26),'b'.repeat(26),'a'.repeat(13) + 'b'.repeat(13) ,'abcdefghijklmnopqrstuvwxyz'];
-        //this.wordsArray = ["drugs", "kunst", "lucht", "lunch", "truck", "tyfus"];
+        //this.wordsArray = ['drugs', 'kunst', 'lucht', 'lunch', 'truck', 'tyfus'];
     }
 
     toggleButtons(disabled) {
@@ -110,13 +112,13 @@ class ClassHangMan {
 
     updateAnswer(letter, locs) {
         for (let i = 0; i < locs.length; i++) {
-            this.guessed = this.guessed.replaceAt(locs[i], letter);
-        }      
+            this.guessed[i] = letter;
+        }
 
-        if (this.guessed == this.word) {
+        if (this.guessed.join('') === this.word) {
             this.win();
         } else {
-            this.answer.innerHTML = this.guessed;
+            this.answer.innerHTML = this.guessed.join('');
         }
     }
 
@@ -138,7 +140,7 @@ class ClassHangMan {
         let locs = [];
 
         for (let i = 0; i < this.size; i++) {
-            if (this.wordArray[i] == letter) {
+            if (this.wordArray[i] === letter) {
                 locs.push(i);
             }
         }
@@ -241,7 +243,7 @@ class ClassHangMan {
                 this.wordsArray = newArray;
                 this.phase++;
                 this.updateImage();
-                if(this.phase == this.textImage.length - 1) {
+                if(this.phase === this.textImage.length - 1) {
                     this.lose();
                 }
             } else {
@@ -277,7 +279,7 @@ class ClassHangMan {
                     }
                 }
     
-                if (max == 0) {
+                if (max === 0) {
                     this.pickWord(letter);
                 } else {
                     this.wordsArray = newerArray[maxi];
@@ -289,16 +291,16 @@ class ClassHangMan {
             let num = 0;
 
             for (let i = 0; i < this.size; i++) {
-                if (this.wordArray[i] == letter) {
+                if (this.wordArray[i] === letter) {
                     locs.push(i);
                     num++;
                 }
             }
             
-            if (num == 0) {
+            if (num === 0) {
                 this.phase++;
                 this.updateImage();
-                if(this.phase == this.textImage.length - 1) {
+                if(this.phase === this.textImage.length - 1) {
                     this.lose();
                 }
             } else {
