@@ -7,8 +7,9 @@ String.prototype.replaceAt = function(index, replacement) {
 class ClassHangMan {
     constructor() {
         this.container = document.createElement('div');
+        this.container.id = 'container';
 
-        const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        const alphabet = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
 
         this.regExps = {};
         for (let i = 0; i < alphabet.length; i++) {
@@ -28,12 +29,26 @@ class ClassHangMan {
                 button.disabled = true;
                 hangman.guess(this.innerHTML); 
             }
+
             this.input.appendChild(button);
+
+            if (i == 9 || i == 18) {
+                this.input.appendChild(document.createElement('br'));
+            }
         }
 
         this.container.appendChild(this.input)
 
         this.setup();
+
+        const resetButton = document.createElement('button');
+        resetButton.innerHTML = 'Reset';
+
+        resetButton.onclick = function() {
+            reset();
+        }
+
+        this.container.appendChild(resetButton);
 
         document.body.appendChild(this.container);
     }
