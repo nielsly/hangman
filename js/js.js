@@ -137,7 +137,7 @@ class ClassHangMan {
     }
 
     win() {
-        this.answer.innerHTML = this.word;
+        this.answer.innerHTML = this.guessed.join('');
         this.answer.appendChild(document.createElement('br'));
         this.toggleButtons(true);
     }
