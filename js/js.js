@@ -7,7 +7,6 @@ String.prototype.replaceAt = function(index, replacement) {
 class ClassHangMan {
     constructor() {
         this.container = document.createElement('div');
-        this.container.id = 'container';
 
         const alphabet = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
 
@@ -50,7 +49,7 @@ class ClassHangMan {
 
         this.container.appendChild(resetButton);
 
-        document.body.appendChild(this.container);
+        document.getElementsByTagName('footer')[0].prepend(this.container);
     }
 
     async setup() {
