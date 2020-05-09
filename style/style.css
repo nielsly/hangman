@@ -1,0 +1,29 @@
+* {
+    font-size: 1.5rem;
+}
+
+body {
+    position: relative;
+    left: 50%;
+    float: left;
+}
+
+#container {
+    position: relative;
+    left: -50%;
+    float: left;
+    text-align: center;
+}
+
+footer {
+    bottom: 0;
+    padding: 2vh 0;
+    text-align: center;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    min-width: 100%;
+    font-family: sans-serif;
+}
