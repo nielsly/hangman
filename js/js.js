@@ -207,8 +207,8 @@ class ClassHangMan {
         }
     }
 
-    lose() {    
-        this.answer.innerHTML = this.wordsArray[Math.random() * this.wordsArray.length | 0];
+    lose() {
+        this.answer.innerHTML = this.word || wordsArray[Math.random() * this.wordsArray.length | 0];
         this.answer.appendChild(document.createElement('br'));
         this.toggleButtons(true);
     }
