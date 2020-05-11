@@ -260,7 +260,7 @@ class ClassHangMan {
     guess(letter) {
         if(this.word === undefined) {
             let newArray, loc;
-            [newArray, loc] = analyse(this.wordsArray, letter);
+            [newArray, loc] = this.analyse(this.wordsArray, letter);
     
             this.wordsArray = newArray;
 
