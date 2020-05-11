@@ -322,8 +322,8 @@ class ClassHangMan {
 
     checkDashes() {
         let locs = '';
-        
-        for (let i = -2; i != -1; i = this.word.indexOf(letter, i + 1), locs += ',' + i);
+
+        for (let i = -2; i != -1; i = this.word.indexOf('-', i + 1), locs += ',' + i);
 
         if (locs !== ',-1') {
             this.updateAnswer('-', locs.slice(0, locs.length - 2).split(','));
