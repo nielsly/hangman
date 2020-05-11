@@ -279,11 +279,11 @@ class ClassHangMan {
                 this.updateAnswer(letter, loc.split(','))
             }
         } else {
-            let locs = [];
+            let locs = '';
 
-            for (let i = -2; i != -1;i = this.word.indexOf(letter, i + 1), locs.push(i));
+            for (let i = -2; i != -1;i = this.word.indexOf(letter, i + 1), locs += ',' + i);
             
-            if (locs.length === 0) {
+            if (locs === ',-1') {
                 this.phase++;
                 this.updateImage();
 
@@ -291,7 +291,7 @@ class ClassHangMan {
                     this.lose();
                 }
             } else {
-                this.updateAnswer(letter, locs);
+                this.updateAnswer(letter, locs.slice(0, locs.length - 2).split(','));
             }
         }
     }
