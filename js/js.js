@@ -30,7 +30,7 @@ class ClassHangMan {
             this.tries.appendChild(option);
         }
 
-        this.tries.children[0].selected = true;
+        this.tries.children[4].selected = true;
 
         this.tries.onclick = function() {
             hangman.reset();
@@ -96,9 +96,9 @@ class ClassHangMan {
 
     setup() {
         this.playAudio('reset');
+        //TODO: add word list parsing
+        //TOOD: size randomization
         this.size = 5;
-        //this.size = Math.random*14 | 0;
-        //this.size = 26;
         this.wordsPicker();
         this.phase = 0;
 
@@ -185,8 +185,6 @@ class ClassHangMan {
     
     async wordsPicker() {
         this.wordsArray = await fetch('words/' + this.size + '.json').then(response => response.json());
-        //this.wordsArray = ['a'.repeat(26),'b'.repeat(26),'a'.repeat(13) + 'b'.repeat(13) ,'abcdefghijklmnopqrstuvwxyz'];
-        //this.wordsArray = ['drugs', 'kunst', 'lucht', 'lunch', 'truck', 'tyfus'];
     }
 
     toggleButtons(disabled) {
@@ -233,7 +231,7 @@ class ClassHangMan {
     }
 
     /*
-    * list : object containing words
+    * list : array containing words
     * letter : char
     */
     analyse(list, letter) {
