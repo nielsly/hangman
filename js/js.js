@@ -1,9 +1,5 @@
 let hg;
 
-String.prototype.replaceAt = function(index, replacement) {
-    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
-}
-
 class ClassHangMan {
     constructor() {
         const hangman = this;
@@ -221,12 +217,11 @@ class ClassHangMan {
     pickWord(letter) {
         console.log('picked word')
         this.word = this.wordsArray[Math.random() * this.wordsArray.length | 0];
-        this.wordArray = this.word.split('');
 
         let locs = [];
 
         for (let i = 0; i < this.size; i++) {
-            if (this.wordArray[i] === letter) {
+            if (this.word[i] === letter) {
                 locs.push(i);
             }
         }
@@ -234,159 +229,63 @@ class ClassHangMan {
         this.updateAnswer(letter, locs);
     }
 
-    /*count(array, letter) {
-        const newArray = [];
-        newArray.push(array);
-        for (let num = 2; newArray[num - 2].length > 0; num++) {
-            regExp = new RegExp('[a-z]*' + (letter + '[a-z]*').repeat(num));
-            console.log(regExp);
-            newArray[num - 1] = [];
-            for (let i = 0; i < newArray[num - 2].length; i++) {
-                if (regExp.test(newArray[num - 2][i])) {
-                    newArray[num - 1].push(newArray[num - 2][i]);
-                }
-            }
-        }
-        for (let i = 0; i < newArray.length - 1; i++) {
-            if (newArray[i] < newArray[i-1])
-        }
-    }*/
-
     /*
-    *
-    * TODO: Can be improved
-    * 
+    * list : object containing words
+    * letter : char
     */
-    /*count(array, letter) {
-        const newArray = [];
-        for (let i = 0; i < this.size; i++) {
-            newArray.push([]);
-            const regExp = new RegExp('[a-z]{' + i + '}' + letter + '[a-z]*');
-
-            for (let j = 0; j < array.length; j++) {
-                if (regExp.test(array[j])) {
-                    newArray[i].push(array[j]);
-                }
-            }
+    analyse(list, letter) {
+        let newList = {};
+        for (const word of list) {
+            let locs = '';
+            for (let i = -2; i != -1; i = word.indexOf(letter, i + 1), locs += ',' + i);
+            newList[locs] === undefined ? newList[locs] = [word] : newList[locs].push(word);
         }
-
-        console.log(newArray);
-
-        let max = 0;
-        let maxi = 0;
-
-        for (let i = 0; i < this.size; i++) {
-            if (newArray[i].length > max) {
-                max = newArray[i].length;
-                maxi = i;
-            }
-        }
-
-        const regExp = new RegExp('[a-z]{' + maxi + '}' + letter + '[a-z]*');
-
-        const newerArray = [];
-        for (let num = 1; num < this.size + 1; num++) {
-            regExp2 = new RegExp('[a-z]*' + (letter + '[a-z]*').repeat(num));
-            regExp3 = new RegExp('[a-z]*' + (letter + '[a-z]*').repeat(num + 1));
-            newerArray.push([]);
-            for (let i = 0; i < newArray[maxi].length; i++) {
-                if (regExp2.test(newArray[maxi][i]) && !regExp3.test(newArray[maxi][i])) {
-                    newerArray[num - 1].push(newArray[maxi][i]);
-                }
-            }
-        }
-
-        console.log(newerArray);
-
-        max = 0;
-        maxi = 0;
-        
-        for (let i = 0; i < newerArray.length; i++) {
-            if(newerArray[i].length > max) {
-                max = newerArray[i].length;
-                maxi = i;
-            }
-        }
-
-        return [newerArray[maxi], maxi + 1];
-    }*/
     
-    /*
-    *
-    * This function currently works in such a way that it gives at most 1 letter, if no words with 1 letter are left it picks a word at random which is used the rest of the game
-    * 
-    */
+        let max = 0;
+        let maxLoc = [];
+        for (const loc in newList) {
+            if (loc.length > max) {
+                max = loc.length;
+                maxLoc = [loc];
+            } else if (loc.length == max) {
+                maxLoc.push(loc);
+            }
+        }
+
+        const loc = maxLoc[Math.random() * maxLoc.length | 0];
+    
+        return [newList[loc], loc.slice(0, loc.length - 2)];
+    }
+    
     guess(letter) {
         if(this.word === undefined) {
-            let newArray = [];
-            for (let i = 0; i < this.wordsArray.length; i++) {
-                if (!this.regExps[letter].test(this.wordsArray[i])) {
-                    newArray.push(this.wordsArray[i]);
-                }
-            }
+            let newArray, loc;
+            [newArray, loc] = analyse(this.wordsArray, letter);
     
-            if (newArray.length > 0) {
-                this.wordsArray = newArray;
+            this.wordsArray = newArray;
+
+            if (loc === ',') {
                 this.phase++;
                 this.updateImage();
-                if(this.phase === this.textImage.length - 1) {
+
+                if (this.phase === this.textImage.length - 1) {
                     this.lose();
                 }
             } else {
                 console.log('picked letter');
-    
-                //TODO: Implement giving letters better
-                let regExp = new RegExp('[a-z]*' + letter + '[a-z]*' + letter + '[a-z]*')
-                newArray = [];
-                for (let i = 0; i < this.wordsArray.length; i++) {
-                    if (!regExp.test(this.wordsArray[i])) {
-                        newArray.push(this.wordsArray[i]);
-                    }
-                }
-    
-                let newerArray = [];
-                for (let i = 0; i < this.size; i++) {
-                    newerArray.push([]);
-                    regExp = new RegExp('^[a-z]{' + i + '}' + letter + '[a-z]{' + (this.size - i - 1) + '}$');
-                    for (let j = 0; j < newArray.length; j++) {
-                        if (regExp.test(newArray[j])) {
-                            newerArray[i].push(newArray[j]);
-                        }
-                    }
-                }
-    
-                let max = 0;
-                let maxi = 0;
-    
-                for (let i = 0; i < this.size; i++) {
-                    if (newerArray[i].length > max) {
-                        max = newerArray[i].length;
-                        maxi = i;
-                    }
-                }
-    
-                if (max === 0) {
-                    this.pickWord(letter);
-                } else {
-                    this.wordsArray = newerArray[maxi];
-                    this.updateAnswer(letter, [maxi]);
-                }
+
+                this.updateAnswer(letter, loc.split(','))
             }
         } else {
             let locs = [];
-            let num = 0;
 
-            for (let i = 0; i < this.size; i++) {
-                if (this.wordArray[i] === letter) {
-                    locs.push(i);
-                    num++;
-                }
-            }
+            for (let i = -2; i != -1;i = this.word.indexOf(letter, i + 1), locs.push(i));
             
-            if (num === 0) {
+            if (locs.length === 0) {
                 this.phase++;
                 this.updateImage();
-                if(this.phase === this.textImage.length - 1) {
+
+                if (this.phase === this.textImage.length - 1) {
                     this.lose();
                 }
             } else {
