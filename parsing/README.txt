@@ -1,0 +1,1 @@
+It'd be very smart to put a password on this directory to make sure people can't mess with your word lists.
