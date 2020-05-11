@@ -39,5 +39,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wordlist'])) {
     file_put_contents('../../words/lengths.json', json_encode($lengths, JSON_FORCE_OBJECT));
 }
 
-//header('Location: ../');
+header('Location: ../');
 ?>

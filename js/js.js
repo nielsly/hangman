@@ -93,7 +93,7 @@ class ClassHangMan {
         //TODO: add word list parsing
         //TOOD: size randomization
         this.size = 5;
-        this.wordsPicker();
+        this.getWords();
         this.phase = 0;
 
         if (this.imageMode) {
@@ -107,7 +107,9 @@ class ClassHangMan {
 
         this.updateImage();
 
-        if (!this.cheating.checked) {
+        if (this.cheating.checked) {
+            this.removeDashWords();
+        } else {
             this.pickWord();
         }
         
@@ -123,6 +125,19 @@ class ClassHangMan {
         this.updateAnswer();
 
         this.container.insertBefore(this.answer, this.resetButton);
+    }
+
+    //https://jsperf.com/regex-vs-indexof-filter-for
+    removeDashWords() {       
+        const newList = [];
+
+        for (let i = 0; i < this.wordsArray.length; i++) {
+            if (this.wordsArray[i].indexOf('-') === -1) {
+                newList.push(this.wordsArray[i]);
+            }
+        }
+
+        this.wordsArray = newList;
     }
 
     pickPhases() {
@@ -177,7 +192,7 @@ class ClassHangMan {
         }
     }
     
-    async wordsPicker() {
+    async getWords() {
         this.wordsArray = await fetch('words/' + this.size + '.json').then(response => response.json());
     }
 

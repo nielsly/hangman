@@ -15,7 +15,7 @@ async function combineLists(input) {
     }
 
     //sort, remove duplicates
-    const regExp = new RegExp('^[A-Za-z\']+[A-Za-z\'-]*$', 'g');
+    const regExp = new RegExp('^[A-Za-z\']+[A-Za-z\'-]*[A-Za-z]+$', 'g');
     words = words.sort().filter(function(item, pos, ary) {
         return regExp.test(item) && (!pos || item != ary[pos - 1]);
     });
