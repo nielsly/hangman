@@ -32,7 +32,7 @@ class ClassHangMan {
 
         this.tries.children[4].selected = true;
 
-        this.tries.onclick = function() {
+        this.tries.onchange = function() {
             hangman.reset();
         }
 
