@@ -24,7 +24,7 @@ class ClassHangMan {
 
         this.tries.children[4].selected = true;
 
-        this.tries.onchange = function() {
+        this.tries.onchange = function () {
             hangman.reset();
         }
 
@@ -35,7 +35,7 @@ class ClassHangMan {
         this.cheating.checked = true;
         this.cheating.id = 'cheating';
 
-        this.cheating.onclick = function() {
+        this.cheating.onclick = function () {
             hangman.reset();
         }
 
@@ -54,7 +54,7 @@ class ClassHangMan {
             const button = document.createElement('button');
             button.innerHTML = alphabet[i];
 
-            button.onclick = function() { 
+            button.onclick = function () {
                 this.disabled = true;
                 hangman.guess(this.innerHTML);
             }
@@ -72,13 +72,13 @@ class ClassHangMan {
         this.resetButton.innerHTML = 'Reset';
         this.resetButton.id = 'resetbutton';
 
-        this.resetButton.onclick = function() {
+        this.resetButton.onclick = function () {
             hangman.reset();
         }
 
         this.container.appendChild(this.resetButton);
 
-        this.setup();        
+        this.setup();
 
         document.getElementById('container').insertBefore(this.container, document.getElementsByTagName('footer')[0]);
     }
@@ -93,7 +93,7 @@ class ClassHangMan {
         //TODO: add word list parsing
         //TOOD: size randomization
         this.size = 5;
-        this.getWords();
+        this.wordsArray = this.getWords();
         this.phase = 0;
 
         if (this.imageMode) {
@@ -102,7 +102,7 @@ class ClassHangMan {
             this.textImage = this.pickPhases();
             this.image = document.createElement('div');
         }
-        
+
         this.image.id = 'image';
 
         this.updateImage();
@@ -112,7 +112,7 @@ class ClassHangMan {
         } else {
             this.pickWord();
         }
-        
+
         this.container.insertBefore(this.image, this.resetButton);
 
         this.answer = document.createElement('u');
@@ -128,7 +128,7 @@ class ClassHangMan {
     }
 
     //https://jsperf.com/regex-vs-indexof-filter-for
-    removeDashWords() {       
+    removeDashWords() {
         const newList = [];
 
         for (let i = 0; i < this.wordsArray.length; i++) {
@@ -140,37 +140,41 @@ class ClassHangMan {
         this.wordsArray = newList;
     }
 
+    async getTextImage() {
+        return await fetch('i/hangman.json').then(response => response.json());
+    }
+
     pickPhases() {
-        const a = ['&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;_&nbsp;_&nbsp;_&nbsp;','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;&nbsp;/&nbsp;\\&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\&nbsp;<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;&nbsp;/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;_/|\\&nbsp;<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;','_____&nbsp;&nbsp;<br>|/&nbsp;&nbsp;|&nbsp;&nbsp;<br>|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;<br>|&nbsp;_/|\\_<br>|&nbsp;_/&nbsp;\\_<br>|_&nbsp;_&nbsp;_&nbsp;'];
-        switch(parseInt(this.tries.value)) {
+        const textImage = this.getTextImage();
+        switch (parseInt(this.tries.value)) {
             case 14:
-                return a;
+                return textImage;
             case 13:
-                return a.slice(0,2).concat(a.slice(3));
+                return textImage.slice(0, 2).concat(textImage.slice(3));
             case 12:
-                return [a[0]].concat(a.slice(3));
+                return [textImage[0]].concat(textImage.slice(3));
             case 11:
-                return a.slice(3);
+                return textImage.slice(3);
             case 10:
-                return a.slice(4);
+                return textImage.slice(4);
             case 9:
-                return a.slice(3,13);
+                return textImage.slice(3, 13);
             case 8:
-                return a.slice(4,13);
+                return textImage.slice(4, 13);
             case 7:
-                return a.slice(3,11);
+                return textImage.slice(3, 11);
             case 6:
-                return a.slice(4,11);
+                return textImage.slice(4, 11);
             case 5:
-                return [a[3], a[4], a[5], a[6], a[8], a[10]];
+                return textImage.slice(3, 7).concat([textImage[8], textImage[10]]);
             case 4:
-                return [a[4], a[5], a[6], a[8], a[10]];
+                return textImage.slice(4, 7).concat([textImage[8], textImage[10]]);
             case 3:
-                return [a[4], a[6], a[8], a[10]];
+                return [textImage[4], textImage[6], textImage[8], textImage[10]];
             case 2:
-                return [a[4], a[6], a[10]];
+                return [textImage[4], textImage[6], textImage[10]];
             case 1:
-                return [a[4], a[10]];
+                return [textImage[4], textImage[10]];
         }
     }
 
@@ -191,9 +195,9 @@ class ClassHangMan {
             this.image.innerHTML = this.textImage[this.phase];
         }
     }
-    
+
     async getWords() {
-        this.wordsArray = await fetch('words/' + this.size + '.json').then(response => response.json());
+        return await fetch('words/' + this.size + '.json').then(response => response.json());
     }
 
     toggleButtons(disabled) {
@@ -204,7 +208,7 @@ class ClassHangMan {
 
     updateAnswer(letter = '&nbsp;', locs = []) {
         for (let i = 0; i < locs.length; i++) {
-            if(locs[i] !== '') {
+            if (locs[i] !== '') {
                 this.guessed[locs[i]] = letter;
                 this.correct++;
             }
@@ -257,21 +261,21 @@ class ClassHangMan {
             if (newList[loc].length > max) {
                 max = newList[loc].length;
                 maxLoc = [loc];
-            } else if (loc.length == max) {
+            } else if (loc.length === max) {
                 maxLoc.push(loc);
             }
         }
 
         const loc = maxLoc[Math.random() * maxLoc.length | 0];
-    
+
         return [newList[loc], loc.slice(0, loc.length - 2)];
     }
-    
+
     guess(letter) {
-        if(this.word === undefined) {
+        if (this.word === undefined) {
             let newArray, loc;
             [newArray, loc] = this.analyse(this.wordsArray, letter);
-    
+
             this.wordsArray = newArray;
 
             if (loc === ',') {
@@ -289,8 +293,8 @@ class ClassHangMan {
         } else {
             let locs = '';
 
-            for (let i = -2; i != -1;i = this.word.indexOf(letter, i + 1), locs += ',' + i);
-            
+            for (let i = -2; i != -1; i = this.word.indexOf(letter, i + 1), locs += ',' + i);
+
             if (locs === ',-1') {
                 this.phase++;
                 this.updateImage();
@@ -305,6 +309,6 @@ class ClassHangMan {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     hg = new ClassHangMan();
 });

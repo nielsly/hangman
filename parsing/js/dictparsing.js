@@ -20,14 +20,14 @@ async function parse(size = 5) {
     }
 
     const dict = guess(wordsArray, alphabet);
-    
+
     return dict;
 }
 
 function guess(inputArray, inputAlphabet, guesses = 0) {
     //initialise dictionary
-    const dict = {'words': inputArray};
-    
+    const dict = { 'words': inputArray };
+
     //for each letter not guessed
     for (let i = 0; i < inputAlphabet.length; i++) {
         //initialise future words array
@@ -36,7 +36,7 @@ function guess(inputArray, inputAlphabet, guesses = 0) {
         //remove letter from future alphabet
         const alphabet = inputAlphabet.slice();
         alphabet.splice(i, 1);
-        
+
         //find regexp for letter
         const regExp = regExps[inputAlphabet[i]];
 
