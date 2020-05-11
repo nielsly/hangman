@@ -32,6 +32,6 @@ async function combineLists(input) {
     output.name = 'words';
     output.value = JSON.stringify(words);
 
-    form.appendChild(input);
+    form.appendChild(output);
     form.submit();
 }

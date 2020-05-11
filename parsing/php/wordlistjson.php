@@ -6,6 +6,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wordlist'])) {
         $str = str_replace('\'', '', $str);
         $words[$k] = $str;
     }
+
+    $split_words = array();
+
+    foreach ($words as $k => $str) {
+        $str = strtolower($str);
+        $len = strlen($str);
+
+        if (!isset($split_words[$len])) {
+            $split_words[$len] = array();
+        }
+
+        array_push($split_words[$len], $str);
+    }
     
     foreach ($split_words as $k => $words) {
         $len = strlen($words[0]);
