@@ -1,0 +1,22 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wordlist'])) {
+    $words = json_decode(file_get_contents('../../words/' . $_POST['wordlist'] . '.json'));
+
+    foreach ($words as $k => $str) {
+        $str = str_replace('\'', '', $str);
+        $words[$k] = $str;
+    }
+    
+    foreach ($split_words as $k => $words) {
+        $len = strlen($words[0]);
+        $num = count($words);
+        $lengths[$len] = $num;
+        $lengths['total'] += $num;
+        file_put_contents('../../words/' . $len . '.json', json_encode($words));
+    }
+
+    file_put_contents('../../words/lengths.json', json_encode($lengths, JSON_FORCE_OBJECT));
+}
+
+header('Location: ../');
+?>

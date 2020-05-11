@@ -1,16 +1,17 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['wordlist'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wordlist'])) {
     $data = file_get_contents('../../words/' . $_POST['wordlist'] . '.txt');
     $words = array();
     preg_match_all('/\b[A-Za-z\'-]*\b/', $data, $words);
-    $words = array_unique($words[0], SORT_REGULAR);
-    sort($words);
 
     foreach ($words as $k => $str) {
         $str = str_replace('\'', '', $str);
         $str = str_replace('-', '', $str);
         $words[$k] = $str;
     }
+
+    $words = array_unique($words[0], SORT_REGULAR);
+    sort($words);
 
     $split_words = array();
 

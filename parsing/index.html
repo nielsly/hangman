@@ -6,10 +6,26 @@
         <title>Parser</title>
     </head>
     <body>
+        <form action='php/listmaker.php' method='post'>
+            <label for='wordlists'>Word lists (seperated by spaces):</label>
+            <input type='text' value='wordlists' name='wordlists' id='wordlists'>
+            <button onclick='combineLists(document.getElementById("wordlists").value)'>Submit</button>
+        </form>
+        <br>
+        <br>
+        <form action='php/wordlistjson.php' method='post'>
+            <label for='wordlistjson'>Word list (json):</label>
+            <input type='text' value='wordlist' name='wordlist' id='wordlistjson'>
+            <input type='submit'>
+        </form>
+        <br>
+        <br>
         <form action='php/wordlist.php' method='post'>
-            <label for='wordlist'>Word list:</label>
+            <label for='wordlist'>Word list (txt):</label>
             <input type='text' value='wordlist' name='wordlist' id='wordlist'>
             <input type='submit'>
         </form>
+        
+        
     </body>
 </html>
