@@ -5,14 +5,6 @@ class ClassHangMan {
         const hangman = this;
         this.container = document.createElement('div');
 
-        const alphabet = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
-
-        this.regExps = {};
-
-        for (let i = 0; i < alphabet.length; i++) {
-            this.regExps[alphabet[i]] = new RegExp('[a-z]*' + alphabet[i] + '[a-z]*');
-        }
-
         //TODO: implement image mode
         this.imageMode = false;
 
@@ -51,17 +43,19 @@ class ClassHangMan {
 
         const label = document.createElement('label');
         label.innerHTML = 'AI may cheat';
-        label.for = 'cheating';
+        label.setAttribute('for', 'cheating');
         this.container.appendChild(label);
 
         this.input = document.createElement('div');
+
+        const alphabet = 'qwertyuiopasdfghjklzxcvbnm';
 
         for (let i = 0; i < alphabet.length; i++) {
             const button = document.createElement('button');
             button.innerHTML = alphabet[i];
 
             button.onclick = function() { 
-                button.disabled = true;
+                this.disabled = true;
                 hangman.guess(this.innerHTML);
             }
 
