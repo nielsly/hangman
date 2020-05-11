@@ -93,7 +93,7 @@ class ClassHangMan {
         //TODO: add word list parsing
         //TOOD: size randomization
         this.size = 5;
-        this.wordsArray = this.getWords();
+        this.wordsArray = await fetch('words/' + this.size + '.json').then(response => response.json());
         this.phase = 0;
 
         if (this.imageMode) {
@@ -190,10 +190,6 @@ class ClassHangMan {
         } else {
             this.image.innerHTML = this.textImage[this.phase];
         }
-    }
-
-    async getWords() {
-        return await fetch('words/' + this.size + '.json').then(response => response.json());
     }
 
     toggleButtons(disabled) {
