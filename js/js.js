@@ -240,12 +240,12 @@ class ClassHangMan {
             for (let i = -2; i != -1; i = word.indexOf(letter, i + 1), locs += ',' + i);
             newList[locs] === undefined ? newList[locs] = [word] : newList[locs].push(word);
         }
-    
+
         let max = 0;
         let maxLoc = [];
         for (const loc in newList) {
-            if (loc.length > max) {
-                max = loc.length;
+            if (newList[loc].length > max) {
+                max = newList[loc].length;
                 maxLoc = [loc];
             } else if (loc.length == max) {
                 maxLoc.push(loc);
