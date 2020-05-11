@@ -190,8 +190,10 @@ class ClassHangMan {
 
     updateAnswer(letter = '&nbsp;', locs = []) {
         for (let i = 0; i < locs.length; i++) {
-            this.guessed[locs[i]] = letter;
-            this.correct++;
+            if(locs[i] !== '') {
+                this.guessed[locs[i]] = letter;
+                this.correct++;
+            }
         }
 
         if (this.correct === this.size) {
