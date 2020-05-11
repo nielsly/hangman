@@ -88,7 +88,7 @@ class ClassHangMan {
         audio.play();
     }
 
-    setup() {
+    async setup() {
         this.playAudio('reset');
         //TODO: add word list parsing
         //TOOD: size randomization
@@ -99,7 +99,7 @@ class ClassHangMan {
         if (this.imageMode) {
             this.image = document.createElement('img');
         } else {
-            this.textImage = this.pickPhases();
+            this.textImage = await this.pickPhases();
             this.image = document.createElement('div');
         }
 
@@ -140,12 +140,8 @@ class ClassHangMan {
         this.wordsArray = newList;
     }
 
-    async getTextImage() {
-        return await fetch('i/hangman.json').then(response => response.json());
-    }
-
-    pickPhases() {
-        const textImage = this.getTextImage();
+    async pickPhases() {
+        const textImage = await fetch('i/hangman.json').then(response => response.json());
         switch (parseInt(this.tries.value)) {
             case 14:
                 return textImage;
