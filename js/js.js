@@ -6,6 +6,7 @@ class ClassHangMan {
         this.container = document.createElement('div');
 
         //TODO: implement image mode
+        //TOOD: implement animations
         this.imageMode = false;
 
         this.tries = document.createElement('select');
@@ -109,6 +110,7 @@ class ClassHangMan {
             this.removeDashWords();
         } else {
             this.pickWord();
+            this.checkDashes();
         }
 
         this.container.insertBefore(this.image, this.resetButton);
@@ -258,6 +260,7 @@ class ClassHangMan {
     */
     analyse(list, letter) {
         let newList = {};
+
         for (const word of list) {
             let locs = '';
             for (let i = -2; i != -1; i = word.indexOf(letter, i + 1), locs += ',' + i);
@@ -266,6 +269,7 @@ class ClassHangMan {
 
         let max = 0;
         let maxLoc = [];
+
         for (const loc in newList) {
             if (newList[loc].length > max) {
                 max = newList[loc].length;
@@ -282,8 +286,7 @@ class ClassHangMan {
 
     guess(letter) {
         if (this.word === undefined) {
-            let newArray, loc;
-            [newArray, loc] = this.analyse(this.wordsArray, letter);
+            let [newArray, loc] = this.analyse(this.wordsArray, letter);
 
             this.wordsArray = newArray;
 
@@ -314,6 +317,16 @@ class ClassHangMan {
             } else {
                 this.updateAnswer(letter, locs.slice(0, locs.length - 2).split(','));
             }
+        }
+    }
+
+    checkDashes() {
+        let locs = '';
+        
+        for (let i = -2; i != -1; i = this.word.indexOf(letter, i + 1), locs += ',' + i);
+
+        if (locs !== ',-1') {
+            this.updateAnswer('-', locs.slice(0, locs.length - 2).split(','));
         }
     }
 }
