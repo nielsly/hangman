@@ -6,20 +6,23 @@
         <title>Parser</title>
     </head>
     <body>
+        <h4>Parse text word list(s) to single json file list.json:</h4>
         <form action='php/listmaker.php' method='post'>
-            <label for='wordlists'>Word lists (seperated by spaces):</label>
-            <input type='text' value='wordlists' name='wordlists' id='wordlists'>
+            <label for='wordlists'>Word list(s) (seperated by spaces):</label>
+            <input type='text' value='wordlist' name='wordlists' id='wordlists'>
             <button onclick='combineLists(document.getElementById("wordlists").value)'>Submit</button>
         </form>
         <br>
         <br>
+        <h4>Split json word list into json word lists for each word size:</h4>
         <form action='php/wordlistjson.php' method='post'>
             <label for='wordlistjson'>Word list (json):</label>
-            <input type='text' value='wordlist' name='wordlist' id='wordlistjson'>
+            <input type='text' value='list' name='wordlist' id='wordlistjson'>
             <input type='submit'>
         </form>
         <br>
         <br>
+        <h4>Split text word list into json word lists for each word size:</h4>
         <form action='php/wordlist.php' method='post'>
             <label for='wordlist'>Word list (txt):</label>
             <input type='text' value='wordlist' name='wordlist' id='wordlist'>
