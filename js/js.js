@@ -89,7 +89,13 @@ class ClassHangMan {
         document.getElementById('container').insertBefore(this.container, document.getElementsByTagName('footer')[0]);
     }
 
+    playAudio(file) {
+        const audio = new Audio('audio/' + file + '.mp3');
+        audio.play();
+    }
+
     setup() {
+        this.playAudio('reset');
         this.size = 5;
         //this.size = Math.random*14 | 0;
         //this.size = 26;
@@ -160,6 +166,7 @@ class ClassHangMan {
     }
 
     reset() {
+        console.log('reset');
         this.toggleButtons(false);
         this.image.remove();
         this.answer.remove();
@@ -205,15 +212,19 @@ class ClassHangMan {
     }
 
     lose() {
+        console.log('lost');
         this.answer.innerHTML = this.word || this.wordsArray[Math.random() * this.wordsArray.length | 0];
         this.answer.appendChild(document.createElement('br'));
         this.toggleButtons(true);
+        this.playAudio('lose');
     }
 
     win() {
+        console.log('won');
         this.answer.innerHTML = this.guessed.join('');
         this.answer.appendChild(document.createElement('br'));
         this.toggleButtons(true);
+        this.playAudio('win');
     }
 
     pickWord(letter) {
