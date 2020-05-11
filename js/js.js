@@ -90,9 +90,7 @@ class ClassHangMan {
 
     async setup() {
         this.playAudio('reset');
-        //TODO: add word list parsing
-        //TOOD: size randomization
-        this.size = 5;
+        this.size = await this.getSize();
         this.wordsArray = await fetch('words/' + this.size + '.json').then(response => response.json());
         this.phase = 0;
 
@@ -125,6 +123,25 @@ class ClassHangMan {
         this.updateAnswer();
 
         this.container.insertBefore(this.answer, this.resetButton);
+    }
+
+    async getSize() {
+        const lengths = await fetch('words/lengths.json').then(response => response.json());
+
+        const sizes = Object.keys(lengths);
+        const choices = [];
+
+        for (let i = 0; i < sizes.length; i++) {
+            if (sizes[i] !== 'total' && sizes[i] > 1 && (lengths[sizes[i]] > 99 || Math.random() < 0.025)) {
+                choices.push(sizes[i]);
+            }
+        }
+
+        if (choices.length === 0) {
+            return parseInt(sizes[Math.random() * sizes.length | 0])
+        } else {
+            return parseInt(choices[Math.random() * choices.length | 0])
+        }
     }
 
     //https://jsperf.com/regex-vs-indexof-filter-for
