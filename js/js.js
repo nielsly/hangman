@@ -227,19 +227,9 @@ class ClassHangMan {
         this.playAudio('win');
     }
 
-    pickWord(letter) {
-        console.log('picked word')
+    pickWord() {
+        console.log('picked word');
         this.word = this.wordsArray[Math.random() * this.wordsArray.length | 0];
-
-        let locs = [];
-
-        for (let i = 0; i < this.size; i++) {
-            if (this.word[i] === letter) {
-                locs.push(i);
-            }
-        }
-
-        this.updateAnswer(letter, locs);
     }
 
     /*
