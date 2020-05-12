@@ -9,15 +9,23 @@ class ClassHangMan {
         //TOOD: implement animations
         this.imageMode = false;
 
+        //TODO: implement different languages
+        this.en = false;
+
+        const title = document.createElement('h1');
+        title.innerHTML = (this.en ? "Hangman" : "Galgje");
+        this.container.appendChild(title);
+
         this.tries = document.createElement('select');
 
         for (let i = 14; i > 0; i--) {
             const option = document.createElement('option');
             option.value = i;
+            
             if (i !== 1) {
-                option.innerHTML = i + ' tries';
+                option.innerHTML = i + (this.en ? ' tries' : ' kansen');
             } else {
-                option.innerHTML = '1 try';
+                option.innerHTML = (this.en ? '1 try' : '1 kans');
             }
 
             this.tries.appendChild(option);
@@ -43,7 +51,7 @@ class ClassHangMan {
         this.container.appendChild(this.cheating);
 
         const label = document.createElement('label');
-        label.innerHTML = 'AI may cheat';
+        label.innerHTML = (this.en ? 'AI may cheat' : 'AI mag valsspelen');
         label.setAttribute('for', 'cheating');
         this.container.appendChild(label);
 
@@ -67,7 +75,27 @@ class ClassHangMan {
             }
         }
 
-        this.container.appendChild(this.input)
+        this.container.appendChild(this.input);
+
+        this.wins = 0;
+        this.losses = 0;
+        this.resets = 0;
+
+        this.progressCounter = document.createElement('div');
+        this.progressCounter.append(document.createElement('br'));
+        this.progressCounter.append(this.en ? 'Wins: ' : 'Gewonnen: ');
+
+        const winsCounter = document.createElement('span')
+        winsCounter.innerHTML = this.wins;
+        this.progressCounter.appendChild(winsCounter);
+
+        this.progressCounter.append(this.en ? ' Losses: ' : ' Verloren: ');
+
+        const lossesCounter = document.createElement('span')
+        lossesCounter.innerHTML = this.losses;
+        this.progressCounter.appendChild(lossesCounter);
+
+        this.container.appendChild(this.progressCounter);
 
         this.resetButton = document.createElement('button');
         this.resetButton.innerHTML = 'Reset';
@@ -78,6 +106,8 @@ class ClassHangMan {
         }
 
         this.container.appendChild(this.resetButton);
+
+        this.elementBelowRegeneratedStuff = this.progressCounter;
 
         this.setup();
 
@@ -113,7 +143,7 @@ class ClassHangMan {
             this.checkDashes();
         }
 
-        this.container.insertBefore(this.image, this.resetButton);
+        this.container.insertBefore(this.image, this.elementBelowRegeneratedStuff);
 
         this.answer = document.createElement('u');
         this.answer.id = 'answer';
@@ -124,7 +154,7 @@ class ClassHangMan {
 
         this.updateAnswer();
 
-        this.container.insertBefore(this.answer, this.resetButton);
+        this.container.insertBefore(this.answer, this.elementBelowRegeneratedStuff);
     }
 
     async getSize() {
@@ -199,6 +229,7 @@ class ClassHangMan {
         this.image.remove();
         this.answer.remove();
         this.word = undefined;
+        this.resets++;
 
         this.setup();
     }
@@ -239,6 +270,8 @@ class ClassHangMan {
         this.answer.appendChild(document.createElement('br'));
         this.toggleButtons(true);
         this.playAudio('lose');
+        this.losses++;
+        this.progressCounter.children[2].innerHTML = this.losses;
     }
 
     win() {
@@ -247,6 +280,8 @@ class ClassHangMan {
         this.answer.appendChild(document.createElement('br'));
         this.toggleButtons(true);
         this.playAudio('win');
+        this.wins++;
+        this.progressCounter.children[1].innerHTML = this.wins;
     }
 
     pickWord() {
