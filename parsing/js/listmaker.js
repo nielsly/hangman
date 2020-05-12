@@ -5,7 +5,6 @@
 * to find the most efficient way of creating a sorted unique array
 */
 async function combineLists(input) {
-    console.log(input);
     const wordLists = input.split(' ');
 
     let words = [];

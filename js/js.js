@@ -12,7 +12,7 @@ class ClassHangMan {
         //TODO: implement different languages
         this.en = false;
 
-        this.extension = this.en ? 'en/' : 'nl';
+        this.extension = this.en ? 'en/' : 'nl/';
 
         this.container.appendChild(document.createElement('br'));
 
