@@ -134,7 +134,7 @@ class ClassHangMan {
         const choices = [];
 
         for (let i = 0; i < sizes.length; i++) {
-            if (sizes[i] !== 'total' && sizes[i] > 1 && (lengths[sizes[i]] > 99 || Math.random() < 0.025)) {
+            if (sizes[i] !== 'total' && sizes[i] > 1 && (lengths[sizes[i]] > lengths.total / 100 || Math.random() < 0.025)) {
                 choices.push(sizes[i]);
             }
         }
