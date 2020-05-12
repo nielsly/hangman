@@ -28,7 +28,7 @@ html {
     font-family: sans-serif;
 }
 
-#answer, #image {
+#guessedletters, #image {
     font-family: monospace;
 }
 
@@ -38,4 +38,10 @@ html {
 
 h1 {
     font-size: 3rem;
+}
+
+button {
+    border-radius: 2px;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
 }

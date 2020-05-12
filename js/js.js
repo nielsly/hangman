@@ -240,7 +240,7 @@ class ClassHangman {
 
         //create underline element to hold guessed letters
         this.guessedLetters = document.createElement('u');
-        this.guessedLetters.id = 'guessedLetters';
+        this.guessedLetters.id = 'guessedletters';
 
         //create array to hold guessed letters of the word, with the word's length
         this.guessed = new Array(this.wordLength);

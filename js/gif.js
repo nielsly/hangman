@@ -20,11 +20,12 @@ async function gif() {
     //create array holding all textImage subsets by tries mapping [index 0 to 14 tries,index 1 to 13 tries...,index 13 to 1 try]
     const textImageByTries = [textImage, textImage.slice(0, 2).concat(textImage.slice(3)), [textImage[0]].concat(textImage.slice(3)), textImage.slice(3), textImage.slice(4), textImage.slice(3, 13), textImage.slice(4, 13), textImage.slice(3, 11), textImage.slice(4, 11), textImage.slice(3, 7).concat([textImage[8], textImage[10]]), textImage.slice(4, 7).concat([textImage[8], textImage[10]]), [textImage[4], textImage[6], textImage[8], textImage[10]], [textImage[4], textImage[6], textImage[10]], [textImage[4], textImage[10]]];
 
-    //center text in body element
+    //centre text in body element
     document.body.style.textAlign = 'center';
 
-    //create title element and add it to the body element
+    //create title element, set its font-family to sans-serif and add it to the body element
     const title = document.createElement('h1');
+    title.style.fontFamily = 'sans-serif';
     document.body.appendChild(title);
 
     //create image container element, set its font-family to monospace and add it to the body element
@@ -39,7 +40,7 @@ async function gif() {
             //get current subset of text images in a string array
             const currentSubset = textImageByTries[i];
 
-            //set title element according to current tries amount
+            //set title element text according to current tries amount
             title.innerHTML = textImageByTries.length - i + ' tries';
 
             //loop over all text images in the current array
