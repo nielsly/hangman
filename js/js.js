@@ -12,16 +12,20 @@ class ClassHangMan {
         //TODO: implement different languages
         this.en = false;
 
+        this.container.appendChild(document.createElement('br'));
+
         const title = document.createElement('h1');
         title.innerHTML = (this.en ? "Hangman" : "Galgje");
         this.container.appendChild(title);
+
+        this.container.appendChild(document.createElement('br'));
 
         this.tries = document.createElement('select');
 
         for (let i = 14; i > 0; i--) {
             const option = document.createElement('option');
             option.value = i;
-            
+
             if (i !== 1) {
                 option.innerHTML = i + (this.en ? ' tries' : ' kansen');
             } else {
@@ -54,6 +58,8 @@ class ClassHangMan {
         label.innerHTML = (this.en ? 'AI may cheat' : 'AI mag valsspelen');
         label.setAttribute('for', 'cheating');
         this.container.appendChild(label);
+
+        this.container.appendChild(document.createElement('br'));
 
         this.input = document.createElement('div');
 
