@@ -12,6 +12,8 @@ class ClassHangMan {
         //TODO: implement different languages
         this.en = false;
 
+        this.extension = this.en ? 'en/' : 'nl';
+
         this.container.appendChild(document.createElement('br'));
 
         const title = document.createElement('h1');
@@ -128,7 +130,7 @@ class ClassHangMan {
     async setup() {
         this.playAudio('reset');
         this.size = await this.getSize();
-        this.wordsArray = await fetch('words/' + this.size + '.json').then(response => response.json());
+        this.wordsArray = await fetch('words/' + this.extension + this.size + '.json').then(response => response.json());
         this.phase = 0;
 
         if (this.imageMode) {
@@ -164,7 +166,7 @@ class ClassHangMan {
     }
 
     async getSize() {
-        const lengths = await fetch('words/lengths.json').then(response => response.json());
+        const lengths = await fetch('words/' + this.extension + 'lengths.json').then(response => response.json());
 
         const sizes = Object.keys(lengths);
         const choices = [];
