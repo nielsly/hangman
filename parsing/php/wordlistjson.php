@@ -1,12 +1,9 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wordlist'])) {
+    $lang = substr($_POST['wordlist'], 0, 3);
+    
     $words = json_decode(file_get_contents('../../words/' . $_POST['wordlist'] . '.json'));
-
-    $lang = $words[count($words) - 1];
-
-    //remove language identifier
-    $words = array_pop($words);
-
+    
     foreach ($words as $k => $str) {
         $str = str_replace('\'', '', $str);
         $words[$k] = $str;

@@ -11,7 +11,6 @@ async function combineLists(input) {
     let words = [];
 
     for (let i = 0; i < wordLists.length; i++) {
-        console.log(wordLists[i].charAt(2) !== '/', wordLists[i].charAt(2), wordLists[i]);
         if (wordLists[i].length < 4 || wordLists[i].charAt(2) !== '/') {
             window.alert("Don't forget the language identifier! (E.g. nl/ or en/.)");
             return;
@@ -32,9 +31,6 @@ async function combineLists(input) {
         words[i] = words[i].toLowerCase();
     }
 
-    //pass language to list, i wasn't able to pass it as a hidden field because then the array wouldn't be sent :/
-    words.push(wordLists[0].slice(0,3))
-
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = 'php/listmaker.php';
@@ -44,6 +40,12 @@ async function combineLists(input) {
     wordsString.name = 'words';
     wordsString.value = JSON.stringify(words);
     form.appendChild(wordsString);
+
+    const language = document.createElement('input');
+    language.type = 'hidden';
+    language.name = 'language';
+    language.value = wordLists[0].substring(0, 3);
+    form.appendChild(language);
 
     document.body.appendChild(form);
 

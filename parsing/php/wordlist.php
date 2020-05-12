@@ -3,6 +3,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wordlist'])) {
     $lang = substr($_POST['wordlist'], 0, 3);
     
     $words = array();
+
     preg_match_all('/\b[A-Za-z\'-]*\b/', file_get_contents('../../words/' . $_POST['wordlist'] . '.txt'), $words);
 
     foreach ($words as $k => $str) {
