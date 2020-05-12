@@ -4,20 +4,21 @@
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <title>Parser</title>
+        <script src="js/listmaker.js"></script>
     </head>
     <body>
         <h4>Parse text word list(s) to single json file list.json:</h4>
-        <form action='php/listmaker.php' method='post'>
+        <div>
             <label for='wordlists'>Word list(s) (seperated by spaces):</label>
-            <input type='text' value='wordlist' name='wordlists' id='wordlists'>
-            <button onclick='combineLists(document.getElementById("wordlists").value)'>Submit</button>
-        </form>
+            <input type='text' value='nl/wordlist' name='wordlists' id='wordlists'>
+            <button id='listsubmit'>Submit</button>
+        </div>
         <br>
         <br>
         <h4>Split json word list into json word lists for each word size:</h4>
         <form action='php/wordlistjson.php' method='post'>
             <label for='wordlistjson'>Word list (json):</label>
-            <input type='text' value='list' name='wordlist' id='wordlistjson'>
+            <input type='text' value='nl/list' name='wordlist' id='wordlistjson'>
             <input type='submit'>
         </form>
         <br>
@@ -25,7 +26,7 @@
         <h4>Split text word list into json word lists for each word size:</h4>
         <form action='php/wordlist.php' method='post'>
             <label for='wordlist'>Word list (txt):</label>
-            <input type='text' value='wordlist' name='wordlist' id='wordlist'>
+            <input type='text' value='nl/wordlist' name='wordlist' id='wordlist'>
             <input type='submit'>
         </form>
         

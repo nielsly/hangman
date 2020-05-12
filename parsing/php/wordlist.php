@@ -1,8 +1,9 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wordlist'])) {
-    $data = file_get_contents('../../words/' . $_POST['wordlist'] . '.txt');
+    $lang = substr($_POST['wordlist'], 0, 3);
+    
     $words = array();
-    preg_match_all('/\b[A-Za-z\'-]*\b/', $data, $words);
+    preg_match_all('/\b[A-Za-z\'-]*\b/', file_get_contents('../../words/' . $_POST['wordlist'] . '.txt'), $words);
 
     foreach ($words as $k => $str) {
         $str = str_replace('\'', '', $str);
@@ -33,10 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wordlist'])) {
         $num = count($words);
         $lengths[$len] = $num;
         $lengths['total'] += $num;
-        file_put_contents('../../words/' . $len . '.json', json_encode($words));
+
+        file_put_contents('../../words/' . $lang . $len . '.json', json_encode($words));
     }
 
-    file_put_contents('../../words/lengths.json', json_encode($lengths, JSON_FORCE_OBJECT));
+    file_put_contents('../../words/' . $lang . 'lengths.json', json_encode($lengths, JSON_FORCE_OBJECT));
 }
 
 header('Location: ../');
