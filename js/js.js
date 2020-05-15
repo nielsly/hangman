@@ -3,7 +3,7 @@ let hm;
 
 /*
 * Class Hangman
-* create hangman game
+* creates hangman game
 * created by Niels Gorter in 2020
 * https://github.com/nielsly/hangman
 */
@@ -201,7 +201,8 @@ class ClassHangman {
         //play setup indication audio
         this.playAudio('setup');
 
-        //gets weighted random length and wordsArray according to language and length
+        //TODO: allow users to choose word length themselves
+        //gets weighted random length and words array according to language and length
         this.wordLength = await this.generateWordLength();
         this.wordsArray = await fetch('words/' + this.extension + this.wordLength + '.json').then(response => response.json());
 
@@ -231,6 +232,7 @@ class ClassHangman {
         } else {
             //pick a word from the word array (according to length and language)
             this.pickWord();
+
             //change guessedLetters element if word has dash characters ('-') in them (as a user cannot pick dashes)
             this.findDashes();
         }
@@ -261,6 +263,9 @@ class ClassHangman {
     * Generate Word Length method
     * generates a weighted random word length
     * returns : int wordLength
+    * https://jsperf.com/object-keys-vs-in-array-vs-in-lookup
+    * https://jsperf.com/vs-for-attribute
+    * https://jsperf.com/vs-attributes-2
     */
     async generateWordLength() {
         //get word lengths object according to language
@@ -273,10 +278,13 @@ class ClassHangman {
 
         //loop over all word lengths in the word lengths object
         for (let i = 0; i < wordLengthsArray.length; i++) {
+            //get current length
+            let length = wordLengthsArray[i];
+
             //skip 'total', if length is larger than 1 and has either more more words than the total amount of words/100 or by a 1/40 random chance
-            if (wordLengthsArray[i] !== 'total' && wordLengthsArray[i] > 1 && (wordsByLength[wordLengthsArray[i]] > wordsByLength.total / 100 || Math.random() < 0.025)) {
+            if (length !== 'total' && length > 1 && (wordsByLength[length] > wordsByLength.total / 100 || Math.random() < 0.025)) {
                 //add word length to length choices array
-                chosenLengthChoices.push(wordLengthsArray[i]);
+                chosenLengthChoices.push(length);
             }
         }
 
@@ -315,6 +323,7 @@ class ClassHangman {
     * Get Text Image method
     * gets textImage and then gives a subset of the phases depending on tries selector value
     * returns : string array textImage with length in [2,...,15]
+    * https://jsperf.com/switch-vs-array-return/1
     */
     async getTextImage() {
         //get text image array

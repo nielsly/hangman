@@ -12,6 +12,7 @@ function sleep(ms) {
 /*
 * Gif method
 * creates 'animation' of text image phases
+* https://jsperf.com/switch-vs-array-return/1
 */
 async function gif() {
     //get text image textImage array
@@ -40,7 +41,7 @@ async function gif() {
             //get current subset of text images in a string array
             const currentSubset = textImageByTries[i];
 
-            //set title element text according to current tries amount
+            //set title element according to current tries amount
             title.innerHTML = textImageByTries.length - i + ' tries';
 
             //loop over all text images in the current array
